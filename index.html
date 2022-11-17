@@ -195,16 +195,14 @@
         <h1 id="greeting"></h1>
 
         <form>
-            <div class="form-group">
-                <label for="exampleFormControlInput1"><b>Xin chào v1</b></label>
-            </div>
-
             <div class="card text-white" id="frmRegister">
                 <h5 class="card-header bg-primary">Thông tin cá nhân</h5>
                 <div class="card-body">
                     <select class="form-control" id="cboUsers">
                     </select>
                 </div>
+                <br />
+                <div class="col-md-12"><button type="button" class="btn btn-primary" onclick="register()">Đăng ký</button></div>
             </div>
             <br />
             <div class="card" id="frmGuess">
@@ -227,7 +225,7 @@
                         </div>
                     </div>
                     <hr/>
-                    <button type="submit" class="btn btn-primary" onclick="register()">Gửi dự đoán</button>
+                    <button type="button" class="btn btn-primary" onclick="submit_result()">Gửi dự đoán</button>
                 </div>
             </div>
         </form>
@@ -239,6 +237,35 @@
     </section>
 
     <script type="application/javascript">
+        var data = {
+                "is_registered": 0,
+                "is_guess": 0,
+                "employees": [
+                    {
+                        "name": "Phạm Bảo",
+                        "department": "GP3",
+                        "id": 1
+                    },
+                    {
+                        "name": "Phạm Bảo2",
+                        "department": "GP3",
+                        "id": 2
+                    }
+                ],
+                "schedulers": [
+                    {
+                        "id": 1,
+                        "a_team": "",
+                        "b_team": "",
+                        "time": "22:30",
+                        "date": "10/10/2022",
+                        "a_team_result": 1,
+                        "b_team_result": 1
+                    }
+                ]
+            };
+
+
         Telegram.WebApp.ready();
         const initData = Telegram.WebApp.initData || '';
         const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
@@ -281,6 +308,8 @@
         }
 
         function register() {
+            $("#frmGuess").show();
+            $("#frmRegister").hide();
             //var data = {"tele_user": `${initDataUnsafe.user.username}`, "tele_id": `${initDataUnsafe.user.id}`, "name": $("#cboUsers").val(), "email": $("#email").val()};
             //alert(JSON.stringify(data, null, 2));
         }
@@ -290,28 +319,7 @@
         }
 
         function load_data(id) {
-            var data = {
-                "is_registered": 0,
-                "is_guess": 1,
-                "employees": [
-                    {
-                        "name": "Phạm Bảo",
-                        "department": "GP3",
-                        "id": 1
-                    }
-                ],
-                "schedulers": [
-                    {
-                        "id": 1,
-                        "a_team": "",
-                        "b_team": "",
-                        "time": "22:30",
-                        "date": "10/10/2022",
-                        "a_team_result": 1,
-                        "b_team_result": 1
-                    }
-                ]
-            };
+
 
             //alert(JSON.stringify(data, null, 2));
             if (data == null || data == undefined){
@@ -321,8 +329,9 @@
 
             if (data.is_registered == 1){
                 $("#frmRegister").hide();
+                $("#frmGuess").show();
             }else if (data.is_registered == 0){
-
+                $("#frmGuess").hide();
                 // Add Employees
                 if (data.employees){
                     $('#cboUsers').find('option').remove().end();
@@ -340,12 +349,23 @@
                 return;
             }
 
+            if (data.is_guess == 1){
+
+            }else if (data.is_registered == 0){
+
+            }else{
+                alert('Không thể lấy thông tin dự đoán, vui lòng thử lại sau!')
+                return;
+            }
+
 
         }
 
 
         function submit_result(id) {
-            alert('Submit');
+            data.is_registered = 1;
+            data.is_guess = 1;
+            load_data(1);
         }
 
         function webviewClose() {
