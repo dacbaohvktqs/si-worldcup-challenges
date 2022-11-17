@@ -347,15 +347,15 @@
                 var postData = {"tele_id": dev ? 1: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": results};
                 // TODO Call API
                 var response = {};
-                 $.ajax({
-                    type: 'POST',
-                    async: false,
-                    url: "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015",
-                    contentType: 'application/json',
-                    dataType : 'json',
-                    data: JSON.stringify(postData),
-                    success: function(output) {response = output}
-                });
+                // $.ajax({
+                 //   type: 'POST',
+                //    async: false,
+                //    url: "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015",
+                //    contentType: 'application/json',
+                //    dataType : 'json',
+                //    data: JSON.stringify(postData),
+               //     success: function(output) {response = output}
+               // });
 
                 if (response.code ==0){
                     load_data(dev ? 1: `${initDataUnsafe.user.id}`);
