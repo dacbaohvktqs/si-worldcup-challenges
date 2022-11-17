@@ -12,11 +12,10 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="robots" content="noindex,nofollow" />
     <title></title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://telegram.org/js/telegram-web-app.js?1"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/fontawesome.min.js" integrity="sha512-nKvEIGRKw2OQCR34yLfnWnvrOBxidLG9aK+vzsBxCZ/9ZxgcS4FrYcN+auWUTkCitTVZAt82InDKJ7x+QtKu6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script>
         function setThemeClass() {
             document.documentElement.className = Telegram.WebApp.colorScheme;
@@ -221,64 +220,39 @@
     </section>
 
     <script type="application/javascript">
+        var data = {};
         var dev = false;
-        var data = {
-                "is_registered": 1,
-                "is_guess": 0,
-                "employees": [
-                    {
-                        "name": "Phạm Bảo",
-                        "department": "GP3",
-                        "id": 1
-                    },
-                    {
-                        "name": "Phạm Bảo2",
-                        "department": "GP3",
-                        "id": 2
-                    }
-                ],
-                "schedulers": [
-                    {
-                        "id": 1,
-                        "a_team": "Pháp",
-                        "b_team": "Tây ban nha",
-                        "time": "22:30",
-                        "date": "10/10/2022",
-                        "a_team_result": 1,
-                        "b_team_result": 2
-                    },
-                    {
-                        "id": 2,
-                        "a_team": "Đức",
-                        "b_team": "Bồ đào nha",
-                        "time": "22:30",
-                        "date": "10/10/2022",
-                        "a_team_result": 2,
-                        "b_team_result": 3
-                    }
-                ]
-            };
 
         $("#lblNotice").hide();
         Telegram.WebApp.ready();
         const initData = Telegram.WebApp.initData || '';
         const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
-        // TO-DO
-        load_data(dev ? 1: `${initDataUnsafe.user.id}`)
+
+
         $( document ).ready(function() {
+            $.ajax({
+              type: 'GET',
+              async: false,
+              url: "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015",
+              data: "",
+              success: function(output) {data = output}
+            });
+
             $("#cboUsers").change();
-        });
+            load_data(dev ? 1: `${initDataUnsafe.user.id}`)
 
-        $(".goal-result").change(function(){
-            var reg = new RegExp('^[0-9]$');
-            if(!reg.test($(this).val())){
-                alert('Kết quả dự đoán phải là số, lớn hơn 0 và nhỏ hơn 9');
-                $(this).val(0);
-            }
-        });
+            $(".goal-result").change(function(){
+                var reg = new RegExp('^[0-9]$');
+                if(!reg.test($(this).val())){
+                    alert('Kết quả dự đoán phải là số, lớn hơn 0 và nhỏ hơn 9');
+                    $(this).val(0);
+                }
+            });
 
-        $("#cboUsers").change(function(){
-            $("#frmInfo").show();
+            $("#cboUsers").change(function(){
+                $("#frmInfo").show();
+            });
+
         });
 
         Telegram.WebApp.onEvent('themeChanged', function() {
@@ -372,10 +346,27 @@
 
                 var postData = {"tele_id": dev ? 1: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": results};
                 // TODO Call API
-                alert(JSON.stringify(postData, null, 2));
-                
-                load_data(dev ? 1: `${initDataUnsafe.user.id}`);
-                $("#lblNotice").show();
+                var response = {};
+                 $.ajax({
+                    type: 'POST',
+                    async: false,
+                    url: "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015",
+                    contentType: 'application/json',
+                    dataType : 'json',
+                    data: JSON.stringify(postData),
+                    success: function(output) {response = output}
+                });
+
+                if (response.code ==0){
+                    load_data(dev ? 1: `${initDataUnsafe.user.id}`);
+                    $("#lblNotice").show();
+                }else {
+                    $("#lblNotice").text("Thực hiện không thành công. " + response.message || "");
+                     $("#lblNotice").removeClass("alert-success");
+                    $("#lblNotice").addClass("alert-danger");
+                    $("#lblNotice").show();
+                }
+
               }
         }
 
