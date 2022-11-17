@@ -182,6 +182,11 @@
         small {
             font-size: 12px;
         }
+
+        .col {
+            padding: 5px;
+            margin: 0px;
+        }
     </style>
 </head>
 
@@ -201,18 +206,27 @@
                     </select>
                 </div>
             </div>
-            <br/>
+            <br />
             <div class="card" id="frmGuess">
                 <h5 class="card-header">Thông tin trận đấu</h5>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col">Column</div>
-                        <div class="col">Column</div>
-                        <div class="w-100"></div>
-                        <div class="col">Column</div>
-                        <div class="col">Column</div>
+                    <b>Trận 1</b>
+                    <hr />
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col card-header bold"><b>Đội tuyển</b></div>
+                            <div class="col card-header bold"><b>Tỉ số dự đoán</b></div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col">Đội tuyển Pháp</div>
+                            <div class="col"><input type="number" id="a_result" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control" /></div>
+                            <div class="w-100"></div>
+                            <div class="col">Đội tuyển Nga</div>
+                            <div class="col"><input type="number" id="a_result" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control" /></div>
+                        </div>
                     </div>
-
+                    <hr/>
                     <button type="submit" class="btn btn-primary" onclick="register()">Gửi dự đoán <i class="fa fa-telegram"></i></button>
                 </div>
             </div>
