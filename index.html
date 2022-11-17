@@ -198,6 +198,7 @@
             <div class="card text-white" id="frmRegister">
                 <h5 class="card-header bg-primary">Thông tin cá nhân</h5>
                 <div class="card-body">
+                    <label class="form-control border-0 p-0 m-0"><b>Vui lòng chọn Họ và tên</b></label>
                     <select class="form-control" id="cboUsers">
                     </select>
                 </div>
@@ -208,23 +209,8 @@
             <div class="card" id="frmGuess">
                 <h5 class="card-header bg-primary text-white">Thông tin trận đấu</h5>
                 <div class="card-body text-black">
-                    <label class="form-control border-0 p-0 m-0"><b>Trận 1</b></label>
-                    <hr class="p-0 m-0"/>
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div>
-                            <div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col"><label class="form-control border-0">Đội tuyển Pháp</label></div>
-                            <div class="col"><input type="number" id="a_result" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control" /></div>
-                            <div class="w-100"></div>
-                            <div class="col"><label class="form-control  border-0">Đội tuyển Pháp</label></div>
-                            <div class="col"><input type="number" id="a_result" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control" /></div>
-                        </div>
-                    </div>
-                    <hr/>
+                    <div id="goalInfo"></div>
+                    <hr />
                     <button type="button" class="btn btn-primary" onclick="submit_result()">Gửi dự đoán</button>
                 </div>
             </div>
@@ -255,8 +241,17 @@
                 "schedulers": [
                     {
                         "id": 1,
-                        "a_team": "",
-                        "b_team": "",
+                        "a_team": "Pháp",
+                        "b_team": "Tây ban nha",
+                        "time": "22:30",
+                        "date": "10/10/2022",
+                        "a_team_result": 1,
+                        "b_team_result": 1
+                    },
+                    {
+                        "id": 2,
+                        "a_team": "Đức",
+                        "b_team": "Bồ đào nha",
                         "time": "22:30",
                         "date": "10/10/2022",
                         "a_team_result": 1,
@@ -352,7 +347,11 @@
             if (data.is_guess == 1){
 
             }else if (data.is_registered == 0){
-
+                var content = '';
+                $.each(data.schedulers, function (i, item) {
+                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control"></div></div></div><hr>';
+                });
+                $("#goalInfo").html(content);
             }else{
                 alert('Không thể lấy thông tin dự đoán, vui lòng thử lại sau!')
                 return;
