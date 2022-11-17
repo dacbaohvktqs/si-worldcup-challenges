@@ -360,12 +360,16 @@
                 if (response.code ==0){
                     load_data(dev ? 1: `${initDataUnsafe.user.id}`);
                     $("#lblNotice").show();
+                    $("#lblNotice").focus();
                 }else {
                     $("#lblNotice").text("Thực hiện không thành công. " + response.message || "");
                      $("#lblNotice").removeClass("alert-success");
                     $("#lblNotice").addClass("alert-danger");
                     $("#lblNotice").show();
+                    $("#lblNotice").focus();
                 }
+
+                Telegram.WebApp.sendData("Đã hoàn thành dự đoán kết quả ngày xxx");
 
               }
         }
