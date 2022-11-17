@@ -211,15 +211,10 @@
                 <div class="card-body text-black">
                     <div id="goalInfo"></div>
                     <hr />
-                    <button type="button" class="btn btn-primary" onclick="submit_result()">Gửi dự đoán</button>
+                    <button type="button" id="btn-guess" class="btn btn-primary" onclick="submit_result()">Gửi dự đoán</button>
                 </div>
             </div>
         </form>
-
-        <h3>Init Data: </h3>
-        <pre id="initData"></pre>
-        <h3>Init Data (unsafe): </h3>
-        <pre id="initDataUnsafe"></pre>
     </section>
 
     <script type="application/javascript">
@@ -345,19 +340,28 @@
             }
 
             if (data.is_guess == 1){
-
+                var content = '';
+                $.each(data.schedulers, function (i, item) {
+                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10"  disabled  class="form-control a-goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" disabled class="form-control b-goal-result"></div></div></div>';
+                       if((i+1)<data.schedulers.length){
+                            content+='<hr/>';
+                       }
+                });
+                $("#goalInfo").html(content);
+                $("#btn-guess").hide();
             }else if (data.is_registered == 0){
                 var content = '';
                 $.each(data.schedulers, function (i, item) {
-                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control"></div></div></div><hr>';
+                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control a-goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control  b-goal-result"></div></div></div>';
+                       if((i+1)<data.schedulers.length){
+                            content+='<hr/>';
+                       }
                 });
                 $("#goalInfo").html(content);
             }else{
                 alert('Không thể lấy thông tin dự đoán, vui lòng thử lại sau!')
                 return;
             }
-
-
         }
 
 
