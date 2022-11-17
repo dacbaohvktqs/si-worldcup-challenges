@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-          
-          <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="MobileOptimized" content="176" />
@@ -14,7 +14,7 @@
     <title></title>
     <script src="https://telegram.org/js/telegram-web-app.js?1"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
         function setThemeClass() {
             document.documentElement.className = Telegram.WebApp.colorScheme;
@@ -51,23 +51,23 @@
             cursor: pointer;
         }
 
-        button[disabled] {
-            opacity: 0.6;
-            cursor: auto;
-            pointer-events: none;
-        }
+            button[disabled] {
+                opacity: 0.6;
+                cursor: auto;
+                pointer-events: none;
+            }
 
-        button.close_btn {
-            /*position: fixed;*/
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 0;
-            margin: 0;
-            padding: 16px 20px;
-            text-transform: uppercase;
-        }
+            button.close_btn {
+                /*position: fixed;*/
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: 0;
+                margin: 0;
+                padding: 16px 20px;
+                text-transform: uppercase;
+            }
 
         section {
             padding: 15px 15px 65px;
@@ -142,40 +142,40 @@
             height: var(--tg-viewport-stable-height, 100vh);
         }
 
-        .viewport_border:before,
-        .viewport_stable_border:before {
-            content: attr(text);
-            display: inline-block;
-            position: absolute;
-            background: gray;
-            right: 0;
-            top: 0;
-            font-size: 7px;
-            padding: 2px 4px;
-            vertical-align: top;
-        }
+            .viewport_border:before,
+            .viewport_stable_border:before {
+                content: attr(text);
+                display: inline-block;
+                position: absolute;
+                background: gray;
+                right: 0;
+                top: 0;
+                font-size: 7px;
+                padding: 2px 4px;
+                vertical-align: top;
+            }
 
-        .viewport_stable_border:before {
-            background: green;
-            left: 0;
-            right: auto;
-        }
+            .viewport_stable_border:before {
+                background: green;
+                left: 0;
+                right: auto;
+            }
 
-        .viewport_border:after,
-        .viewport_stable_border:after {
-            content: '';
-            display: block;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            border: 2px dashed gray;
-        }
+            .viewport_border:after,
+            .viewport_stable_border:after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                border: 2px dashed gray;
+            }
 
-        .viewport_stable_border:after {
-            border-color: green;
-        }
+            .viewport_stable_border:after {
+                border-color: green;
+            }
 
         small {
             font-size: 12px;
@@ -184,127 +184,125 @@
 </head>
 
 <body>
+    <section>
+        <h1 id="greeting"></h1>
 
-<section>
-    <h1 id="greeting"></h1>
+        <form id="frmRegister">
+            <div class="form-group">
+                <label for="exampleFormControlInput1"><b>Xin chào</b></label>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Chọn thông tin cá nhân</label>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Email</label>
+                <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Số điện thoại</label>
+                <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Đơn vị</label>
+                <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+            </div>
+            </div>
+        </form>
 
-    <form>
-  <div class="form-group">
-    <label for="exampleFormControlInput1">Email address</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect1">Example select</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlSelect2">Example multiple select</label>
-    <select multiple class="form-control" id="exampleFormControlSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Example textarea</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-  </div>
-</form>
-    
 
-    <h3>Init Data: </h3>
-    <pre id="initData"></pre>
-    <h3>Init Data (unsafe): </h3>
-    <pre id="initDataUnsafe"></pre>
-</section>
+        <h3>Init Data: </h3>
+        <pre id="initData"></pre>
+        <h3>Init Data (unsafe): </h3>
+        <pre id="initDataUnsafe"></pre>
+    </section>
 
-<script type="application/javascript">
-    // Telegram.WebApp.ready();
+    <script type="application/javascript">
+        // Telegram.WebApp.ready();
 
-    // const initData = Telegram.WebApp.initData || '';
-    // const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+        // const initData = Telegram.WebApp.initData || '';
+        // const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
 
-    // document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.last_name}!`;
-    // document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
-    // document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
-    // document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
+        // document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.last_name}!`;
+        // document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
+        // document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
+        // document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
 
-    // Telegram.WebApp.MainButton
-    //     .setText('CLOSE WEBVIEW')
-    //     .show()
-    //     .onClick(function(){ webviewClose(); });
+        // Telegram.WebApp.MainButton
+        //     .setText('CLOSE WEBVIEW')
+        //     .show()
+        //     .onClick(function(){ webviewClose(); });
 
-    // Telegram.WebApp.onEvent('themeChanged', function() {
-    //     document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
-    // });
+        // Telegram.WebApp.onEvent('themeChanged', function() {
+        //     document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
+        // });
 
-    function toggleMainButton(el) {
-        const mainButton = Telegram.WebApp.MainButton;
-        if (mainButton.isVisible) {
-            mainButton.hide();
-            el.innerHTML = 'Show Main Button';
-        } else {
-            mainButton.show();
-            el.innerHTML = 'Hide Main Button';
-        }
-    }
-
-    function webviewExpand() {
-        Telegram.WebApp.expand();
-    }
-
-    function webviewClose() {
-        Telegram.WebApp.close();
-    }
-
-    function sendTime(spam) {
-        const repeat = spam ? 10 : 1;
-        for (let i = 0; i < repeat; i++) {
-            Telegram.WebApp.sendData(new Date().toString());
-        }
-    }
-
-    function requestLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                document.querySelector('#locationData').innerHTML = '(' + position.coords.latitude + ', ' + position.coords.longitude + ')';
-            });
-        } else {
-            document.querySelector('#locationData').innerHTML = '(Geolocation is not supported in this browser)';
+        function toggleMainButton(el) {
+            const mainButton = Telegram.WebApp.MainButton;
+            if (mainButton.isVisible) {
+                mainButton.hide();
+                el.innerHTML = 'Show Main Button';
+            } else {
+                mainButton.show();
+                el.innerHTML = 'Hide Main Button';
+            }
         }
 
-        return false;
-    }
-
-    function requestVideo() {
-        if (navigator.mediaDevices) {
-            navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then(function(stream) {
-                document.querySelector('#videoData').innerHTML = '(Access granted)';
-            });
-        } else {
-            document.querySelector('#videoData').innerHTML = '(Media devices is not supported in this browser)';
+        function webviewExpand() {
+            Telegram.WebApp.expand();
         }
-        return false;
-    }
 
-    function requestAudio() {
-        if (navigator.mediaDevices) {
-            navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
-                document.querySelector('#audioData').innerHTML = '(Access granted)';
-            });
-        } else {
-            document.querySelector('#audioData').innerHTML = '(Media devices is not supported in this browser)';
+        function webviewClose() {
+            Telegram.WebApp.close();
         }
-        return false;
-    }
-</script>
+
+        function sendTime(spam) {
+            const repeat = spam ? 10 : 1;
+            for (let i = 0; i < repeat; i++) {
+                Telegram.WebApp.sendData(new Date().toString());
+            }
+        }
+
+        function requestLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    document.querySelector('#locationData').innerHTML = '(' + position.coords.latitude + ', ' + position.coords.longitude + ')';
+                });
+            } else {
+                document.querySelector('#locationData').innerHTML = '(Geolocation is not supported in this browser)';
+            }
+
+            return false;
+        }
+
+        function requestVideo() {
+            if (navigator.mediaDevices) {
+                navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then(function(stream) {
+                    document.querySelector('#videoData').innerHTML = '(Access granted)';
+                });
+            } else {
+                document.querySelector('#videoData').innerHTML = '(Media devices is not supported in this browser)';
+            }
+            return false;
+        }
+
+        function requestAudio() {
+            if (navigator.mediaDevices) {
+                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
+                    document.querySelector('#audioData').innerHTML = '(Access granted)';
+                });
+            } else {
+                document.querySelector('#audioData').innerHTML = '(Media devices is not supported in this browser)';
+            }
+            return false;
+        }
+    </script>
 </body>
 </html>
