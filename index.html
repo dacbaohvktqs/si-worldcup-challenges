@@ -366,6 +366,17 @@
 
 
         function submit_result(id) {
+            var results = [];
+             $.each(data.schedulers, function (i, item) {
+                var result = {"id": item.id, "a_team": $("#a_result_" + item.id).val(), "b_team": $("#b_result_" + item.id).val()};
+                results.push(result);
+             });
+
+            var postData = {"tele_id": `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": results};
+
+
+            alert(JSON.stringify(postData, null, 2));
+
             data.is_registered = 1;
             data.is_guess = 1;
             load_data(1);
