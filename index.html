@@ -193,7 +193,7 @@
             </div>
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Chọn thông tin cá nhân</label>
-                <select class="form-control" id="exampleFormControlSelect1">
+                <select class="form-control" id="cboUsers">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -201,19 +201,53 @@
                     <option>5</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Email</label>
-                <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+            <div id="frmInfo">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Email</label>
+                    <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Số điện thoại</label>
+                    <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Đơn vị</label>
+                    <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+                </div>
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary" onclick="register()">Đăng ký tham gia</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Số điện thoại</label>
-                <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
-            </div>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">Đơn vị</label>
-                <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
-            </div>
+        </form>
+
+        <form id="frmDuDoan">
+
+            <div class="form-row align-items-center">
+
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputName">Name</label>
+                    <input type="text" class="form-control" id="inlineFormInputName" placeholder="Jane Doe">
+                </div>
+                <div class="col-sm-3 my-1">
+                    <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">@</div>
+                        </div>
+                        <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
+                    </div>
+                </div>
+                <div class="col-auto my-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="autoSizingCheck2">
+                        <label class="form-check-label" for="autoSizingCheck2">
+                            Remember me
+                        </label>
+                    </div>
+                </div>
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary" onclick="submit_result()">Dự đoán</button>
+                </div>
             </div>
         </form>
 
@@ -225,10 +259,29 @@
     </section>
 
     <script type="application/javascript">
-        // Telegram.WebApp.ready();
+        Telegram.WebApp.ready();
+        const initData = Telegram.WebApp.initData || '';
+        const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
 
-        // const initData = Telegram.WebApp.initData || '';
-        // const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+        var isExisting = `${initDataUnsafe.user.id}`;
+        $( document ).ready(function() {
+            if(isExisting == ""){
+                $("#frmRegister").show();
+                $("#frmInfo").hide();
+                 $("#frmDuDoan").hide();
+            }else{
+                $("#frmRegister").hide();
+                $("#frmDuDoan").show();
+            }
+
+        });
+
+        $("#cboUsers").change(function(){
+            alert($("#cboUsers").val());
+            $("#frmInfo").show();
+        });
+
+
 
         // document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.last_name}!`;
         // document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
@@ -255,53 +308,20 @@
             }
         }
 
-        function webviewExpand() {
-            Telegram.WebApp.expand();
+        function register() {
+            alert('Register');
+        }
+
+        function find_by_id(id) {
+
+        }
+
+        function submit_result(id) {
+            alert('Submit');
         }
 
         function webviewClose() {
             Telegram.WebApp.close();
-        }
-
-        function sendTime(spam) {
-            const repeat = spam ? 10 : 1;
-            for (let i = 0; i < repeat; i++) {
-                Telegram.WebApp.sendData(new Date().toString());
-            }
-        }
-
-        function requestLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    document.querySelector('#locationData').innerHTML = '(' + position.coords.latitude + ', ' + position.coords.longitude + ')';
-                });
-            } else {
-                document.querySelector('#locationData').innerHTML = '(Geolocation is not supported in this browser)';
-            }
-
-            return false;
-        }
-
-        function requestVideo() {
-            if (navigator.mediaDevices) {
-                navigator.mediaDevices.getUserMedia({ audio: false, video: true }).then(function(stream) {
-                    document.querySelector('#videoData').innerHTML = '(Access granted)';
-                });
-            } else {
-                document.querySelector('#videoData').innerHTML = '(Media devices is not supported in this browser)';
-            }
-            return false;
-        }
-
-        function requestAudio() {
-            if (navigator.mediaDevices) {
-                navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
-                    document.querySelector('#audioData').innerHTML = '(Access granted)';
-                });
-            } else {
-                document.querySelector('#audioData').innerHTML = '(Media devices is not supported in this browser)';
-            }
-            return false;
         }
     </script>
 </body>
