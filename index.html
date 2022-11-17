@@ -205,14 +205,14 @@
     const initData = Telegram.WebApp.initData || '';
     const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
     
-    alert(isExist(`${initDataUnsafe.user.id}`));
+    //alert(isExist(`${initDataUnsafe.user.id}`));
+    alert(isExist("123"));
     
     
-    
-    document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.username}!`;
-    document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
-    document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
-    document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
+    //document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.username}!`;
+    //document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
+    //document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
+    //document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
 
     Telegram.WebApp.MainButton
         .setText('CLOSE WEBVIEW')
@@ -235,18 +235,22 @@
     }
     
     function isExist(id){
-    	var settings = {
-        "url": "https://gw-bioid.vnpt.vn/token",
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": "Basic ahshahsuas"
-        },
-        "data": {
-          "grant_type": "client_credentials"
-        }
-      };
+    	try{
+          var settings = {
+          "url": "https://gw-bioid.vnpt.vn/token",
+          "method": "POST",
+          "timeout": 0,
+          "headers": {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Basic ahshahsuas"
+          },
+          "data": {
+            "grant_type": "client_credentials"
+          }
+        };
+      }cath(e){
+      	alert(e);
+      }
 
       $.ajax(settings).done(function (response) {
         console.log(response);
