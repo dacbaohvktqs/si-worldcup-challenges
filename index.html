@@ -369,6 +369,8 @@
                     $("#lblNotice").focus();
                 }
 
+                let tg = window.Telegram.WebApp;
+                tg.sendData("Đã hoàn thành dự đoán kết quả ngày xxx");
                 Telegram.WebApp.sendData("Đã hoàn thành dự đoán kết quả ngày xxx");
 
               }
