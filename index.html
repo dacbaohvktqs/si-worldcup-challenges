@@ -194,25 +194,24 @@
             <div class="form-group">
                 <label for="exampleFormControlSelect1">Chọn thông tin cá nhân</label>
                 <select class="form-control" id="cboUsers">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option>Phạm Đắc Bảo</option>
+                    <option>Phạm Văn Lực</option>
+                    <option>Nguyễn Thị Mỹ Linh</option>
+                    <option>Nguyễn Thị Hằng</option>
                 </select>
             </div>
             <div id="frmInfo">
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Email</label>
-                    <input type="email" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+                    <input type="email" disabled class="form-control" id="email" placeholder="">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Số điện thoại</label>
-                    <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+                    <input type="text" disabled class="form-control" id="phone" placeholder="">
                 </div>
                 <div class="form-group">
                     <label for="exampleFormControlTextarea1">Đơn vị</label>
-                    <input type="text" disabled class="form-control" id="exampleFormControlInput1" placeholder="">
+                    <input type="text" disabled class="form-control" id="department" placeholder="">
                 </div>
                 <div class="col-auto my-1">
                     <button type="submit" class="btn btn-primary" onclick="register()">Đăng ký tham gia</button>
@@ -263,7 +262,8 @@
         const initData = Telegram.WebApp.initData || '';
         const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
 
-        var isExisting = `${initDataUnsafe.user.id}`;
+        //var isExisting = `${initDataUnsafe.user.id}`;
+        var isExisting ="";
         $( document ).ready(function() {
             if(isExisting == ""){
                 $("#frmRegister").show();
@@ -277,7 +277,6 @@
         });
 
         $("#cboUsers").change(function(){
-            alert($("#cboUsers").val());
             $("#frmInfo").show();
         });
 
@@ -309,7 +308,8 @@
         }
 
         function register() {
-            alert('Register');
+            var data = {"username": `${initDataUnsafe.user.username}`, "tele_id": `${initDataUnsafe.user.id}`, "name": $("#cboUsers").val(), "email": $("#email").val()};
+            alert(JSON.stringify(data, null, 2));
         }
 
         function find_by_id(id) {
