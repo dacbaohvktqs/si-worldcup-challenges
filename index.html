@@ -212,6 +212,9 @@
                     <div id="goalInfo"></div>
                     <hr />
                     <button type="button" id="btn-guess" class="btn btn-primary" onclick="submit_result()">Gửi dự đoán</button>
+                    <div id="lblNotice" class="alert alert-success" role="alert">
+                        Dự đoán thành công! Chúc bạn luôn may mắn!
+                    </div>
                 </div>
             </div>
         </form>
@@ -219,7 +222,7 @@
 
     <script type="application/javascript">
         var data = {
-                "is_registered": 0,
+                "is_registered": 1,
                 "is_guess": 0,
                 "employees": [
                     {
@@ -241,7 +244,7 @@
                         "time": "22:30",
                         "date": "10/10/2022",
                         "a_team_result": 1,
-                        "b_team_result": 1
+                        "b_team_result": 2
                     },
                     {
                         "id": 2,
@@ -249,38 +252,36 @@
                         "b_team": "Bồ đào nha",
                         "time": "22:30",
                         "date": "10/10/2022",
-                        "a_team_result": 1,
-                        "b_team_result": 1
+                        "a_team_result": 2,
+                        "b_team_result": 3
                     }
                 ]
             };
 
-
+        $("#lblNotice").hide();
         Telegram.WebApp.ready();
         const initData = Telegram.WebApp.initData || '';
         const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
+        // TO-DO
         load_data(1);
         //var isExisting = `${initDataUnsafe.user.id}`;
+
         var isExisting ="";
         $( document ).ready(function() {
             $("#cboUsers").change();
         });
 
+        $(".goal-result").change(function(){
+            var reg = new RegExp('^[0-9]$');
+            if(!reg.test($(this).val())){
+                alert('Kết quả dự đoán phải là số, lớn hơn 0 và nhỏ hơn 9');
+                $(this).val(0);
+            }
+        });
+
         $("#cboUsers").change(function(){
             $("#frmInfo").show();
         });
-
-
-
-        // document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.last_name}!`;
-        // document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
-        // document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
-        // document.querySelector('#themeData').html(JSON.stringify(Telegram.WebApp.themeParams, null, 2));
-
-        // Telegram.WebApp.MainButton
-        //     .setText('CLOSE WEBVIEW')
-        //     .show()
-        //     .onClick(function(){ webviewClose(); });
 
         Telegram.WebApp.onEvent('themeChanged', function() {
             document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
@@ -342,17 +343,19 @@
             if (data.is_guess == 1){
                 var content = '';
                 $.each(data.schedulers, function (i, item) {
-                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10"  disabled  class="form-control a-goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" disabled class="form-control b-goal-result"></div></div></div>';
+                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value='+ item.a_team_result +' min="0" max="10"  disabled  class="form-control goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value='+ item.b_team_result +' min="0" max="10" disabled class="form-control goal-result"></div></div></div>';
                        if((i+1)<data.schedulers.length){
                             content+='<hr/>';
                        }
                 });
                 $("#goalInfo").html(content);
+                $("#lblNotice").text("Bạn đã dự đoán kết quả các trận đấu! Chúc bạn luôn may mắn!");
+                $("#lblNotice").show();
                 $("#btn-guess").hide();
-            }else if (data.is_registered == 0){
+            }else if (data.is_guess == 0){
                 var content = '';
                 $.each(data.schedulers, function (i, item) {
-                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control a-goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control  b-goal-result"></div></div></div>';
+                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' diễn ra vào lúc ' + item.time + '</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển ' + item.a_team +'</label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển ' + item.b_team +'</label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control  goal-result"></div></div></div>';
                        if((i+1)<data.schedulers.length){
                             content+='<hr/>';
                        }
@@ -366,20 +369,25 @@
 
 
         function submit_result(id) {
-            var results = [];
-             $.each(data.schedulers, function (i, item) {
-                var result = {"id": item.id, "a_team": $("#a_result_" + item.id).val(), "b_team": $("#b_result_" + item.id).val()};
-                results.push(result);
-             });
+              let text = "Kết quả dự đoán chỉ được gửi 1 lần duy nhất trong ngày. Bạn muốn tiếp tục?.";
+              if (confirm(text) == true) {
+                  var results = [];
+                 $.each(data.schedulers, function (i, item) {
+                    var result = {"id": item.id, "a_team": $("#a_result_" + item.id).val(), "b_team": $("#b_result_" + item.id).val()};
+                    results.push(result);
+                 });
 
-            var postData = {"tele_id": `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": results};
+                // TO-DO
+                //var postData = {"tele_id": `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": results};
+                var postData = {"tele_id": 1, "emp_id":  $("#cboUsers").val(), "results": results};
 
+                alert(JSON.stringify(postData, null, 2));
 
-            alert(JSON.stringify(postData, null, 2));
-
-            data.is_registered = 1;
-            data.is_guess = 1;
-            load_data(1);
+                data.is_registered = 1;
+                data.is_guess = 1;
+                load_data(1);
+                $("#lblNotice").show();
+              }
         }
 
         function webviewClose() {
