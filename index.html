@@ -204,7 +204,11 @@
 
     const initData = Telegram.WebApp.initData || '';
     const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
-	alert(`Hi, ${initDataUnsafe.user.username}!`);
+    
+    alert(isExist(`${initDataUnsafe.user.id}`));
+    
+    
+    
     document.querySelector('#greeting').innerHTML = `Hi, ${initDataUnsafe.user.username}!`;
     document.querySelector('#initData').innerHTML = JSON.stringify(initData, null, 2);
     document.querySelector('#initDataUnsafe').innerHTML = JSON.stringify(initDataUnsafe, null, 2);
@@ -228,6 +232,25 @@
             mainButton.show();
             el.innerHTML = 'Hide Main Button';
         }
+    }
+    
+    function isExist(id){
+    	var settings = {
+        "url": "https://gw-bioid.vnpt.vn/token",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": "Basic ahshahsuas"
+        },
+        "data": {
+          "grant_type": "client_credentials"
+        }
+      };
+
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+      });
     }
 
     function webviewExpand() {
