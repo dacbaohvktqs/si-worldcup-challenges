@@ -265,9 +265,9 @@
         //     .show()
         //     .onClick(function(){ webviewClose(); });
 
-        // Telegram.WebApp.onEvent('themeChanged', function() {
-        //     document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
-        // });
+        Telegram.WebApp.onEvent('themeChanged', function() {
+            document.querySelector('#themeData').innerHTML = JSON.stringify(Telegram.WebApp.themeParams, null, 2);
+        });
 
         function toggleMainButton(el) {
             const mainButton = Telegram.WebApp.MainButton;
