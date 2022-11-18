@@ -12,7 +12,7 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="robots" content="noindex,nofollow" />
     <title></title>
-    <script src="https://telegram.org/js/telegram-web-app.js?1"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -220,6 +220,7 @@
     </section>
 
     <script type="application/javascript">
+        var tele_id = 3;
         var data = {};
         var get_data_endpoint = "https://gw-bioid.vnpt.vn/wc/1.0/WorldCup/GetData_WorldCup";
         var post_data_endpoint = "https://gw-bioid.vnpt.vn/wc/1.0/WorldCup/Guess";
@@ -235,13 +236,13 @@
             $.ajax({
               type: 'GET',
               async: false,
-              url: get_data_endpoint + "?tele_id=" + (dev ? 1: `${initDataUnsafe.user.id}`),
+              url: get_data_endpoint + "?tele_id=" + (dev ? tele_id: `${initDataUnsafe.user.id}`),
               data: "",
               success: function(output) {data = output}
             });
 
             $("#cboUsers").change();
-            load_data(dev ? 1: `${initDataUnsafe.user.id}`)
+            load_data(dev ? tele_id: `${initDataUnsafe.user.id}`)
 
             $(".goal-result").change(function(){
                 var reg = new RegExp('^[0-9]$');
@@ -282,7 +283,7 @@
             }
 
             if (data.schedulers.length == 0){
-                var post_data = {"tele_id": dev ? 1: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": []};;
+                var post_data = {"tele_id": dev ? tele_id: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": []};;
                 var response = register_or_push_data(JSON.stringify(post_data));
                 if (response.code == 0){
                     $("#frmGuess").show();
@@ -299,6 +300,7 @@
 
         // Submit Guess or Register User
         function register_or_push_data(data){
+            alert(JSON.stringify(data));
             var response = {};
                 $.ajax({
                 type: 'POST',
@@ -387,16 +389,16 @@
               if (confirm(text) == true) {
                   var results = [];
                  $.each(data.schedulers, function (i, item) {
-                    var result = {"id": item.id, "a_team": $("#a_result_" + item.id).val(), "b_team": $("#b_result_" + item.id).val()};
+                    var result = {"id": item.id, "use_star": 0, "a_team": $("#a_result_" + item.id).val(), "b_team": $("#b_result_" + item.id).val()};
                     results.push(result);
                  });
 
-                var postData = {"tele_id": dev ? 1: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": results};
+                var postData = {"tele_id": dev ? tele_id: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val() ? "0": $("#cboUsers").val(), "results": results};
                 // TODO Call API
                 var response = register_or_push_data(JSON.stringify(postData));
 
                 if (response.code ==0){
-                    load_data(dev ? 1: `${initDataUnsafe.user.id}`);
+                    load_data(dev ? tele_id: `${initDataUnsafe.user.id}`);
                     $("#lblNotice").show();
                     $("#lblNotice").focus();
                 }else {
