@@ -195,7 +195,7 @@
 
         <form>
             <div class="card text-white" id="frmRegister">
-                <h5 class="card-header bg-primary">Thông tin cá nhân</h5>
+                <h5 class="card-header bg-primary">Đăng ký thông tin</h5>
                 <div class="card-body">
                     <label class="form-control border-0 p-0 m-0"><b>Vui lòng chọn Họ và tên</b></label>
                     <select class="form-control" id="cboUsers">
@@ -221,7 +221,9 @@
 
     <script type="application/javascript">
         var data = {};
-        var dev = false;
+        var get_data_endpoint = "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015";
+        var post_data_endpoint = "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015";
+        var dev = true;
 
         $("#lblNotice").hide();
         Telegram.WebApp.ready();
@@ -233,7 +235,7 @@
             $.ajax({
               type: 'GET',
               async: false,
-              url: "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015",
+              url: get_data_endpoint,
               data: "",
               success: function(output) {data = output}
             });
@@ -244,8 +246,9 @@
             $(".goal-result").change(function(){
                 var reg = new RegExp('^[0-9]$');
                 if(!reg.test($(this).val())){
-                    alert('Kết quả dự đoán phải là số, lớn hơn 0 và nhỏ hơn 9');
+                    alert('Kết quả dự đoán phải là số, có giá trị từ 0 và nhỏ hơn 9');
                     $(this).val(0);
+                    $(this).focus();
                 }
             });
 
@@ -271,10 +274,31 @@
         }
 
         function register() {
+            if (data.schedulers.length == 0){
+                alert('submit register');
+            }
+
             $("#frmGuess").show();
             $("#frmRegister").hide();
         }
 
+        // Submit Guess or Register User
+        function register_or_push_data(data){
+            var response = {};
+                $.ajax({
+                type: 'POST',
+                async: false,
+                url: post_data_endpoint,
+                contentType: 'application/json',
+                dataType : 'json',
+                data: data,
+                success: function(output) {response = output}
+            });
+
+            return response;
+        }
+
+        // Load main data
         function load_data(id) {
             if (data == null || data == undefined){
                 alert('Không thể lấy thông tin lịch thi đấu, vui lòng thử lại sau!')
@@ -300,6 +324,13 @@
                 $("#frmRegister").show();
             }else {
                 alert('Không thể lấy thông tin trận đấu, vui lòng thử lại sau!')
+                return;
+            }
+
+            if (data.schedulers.length == 0){
+                $("#goalInfo").show();
+                $("#goalInfo").html('<div id="lblEmpty" class="alert alert-warning" role="alert">WorldCup hôm nay tạm nghỉ! Vui lòng quay lại sau!</div>');
+                $("#btn-guess").hide();
                 return;
             }
 
@@ -334,7 +365,6 @@
             }
         }
 
-
         function submit_result(id) {
               let text = "Kết quả dự đoán chỉ được gửi 1 lần duy nhất trong ngày. Bạn muốn tiếp tục?.";
               if (confirm(text) == true) {
@@ -346,19 +376,10 @@
 
                 var postData = {"tele_id": dev ? 1: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": results};
                 // TODO Call API
-                var response = {"code": 0};
-                // $.ajax({
-                 //   type: 'POST',
-                //    async: false,
-                //    url: "https://mocki.io/v1/0cd36be0-ccd4-4997-a654-c1692df74015",
-                //    contentType: 'application/json',
-                //    dataType : 'json',
-                //    data: JSON.stringify(postData),
-               //     success: function(output) {response = output}
-               // });
+                var response = register_or_push_data(JSON.stringify(postData));
 
                 if (response.code ==0){
-                    //load_data(dev ? 1: `${initDataUnsafe.user.id}`);
+                    load_data(dev ? 1: `${initDataUnsafe.user.id}`);
                     $("#lblNotice").show();
                     $("#lblNotice").focus();
                 }else {
@@ -368,11 +389,6 @@
                     $("#lblNotice").show();
                     $("#lblNotice").focus();
                 }
-
-                let tg = window.Telegram.WebApp;
-                tg.sendData("Đã hoàn thành dự đoán kết quả ngày xxx");
-                Telegram.WebApp.sendData("Đã hoàn thành dự đoán kết quả ngày xxx");
-
               }
         }
 
