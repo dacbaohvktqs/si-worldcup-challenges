@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -206,7 +206,7 @@
             </div>
             <br />
             <div class="card" id="frmGuess">
-                <h5 class="card-header bg-primary text-white">Thông tin trận đấu</h5>
+                <h5 class="card-header bg-primary text-white">Dự đoán kết quả các trận</h5>
                 <div class="card-body text-black">
                     <div id="goalInfo"></div>
                     <hr />
@@ -235,7 +235,7 @@
             $.ajax({
               type: 'GET',
               async: false,
-              url: get_data_endpoint,
+              url: get_data_endpoint + "?tele_id=" + (dev ? 1: `${initDataUnsafe.user.id}`),
               data: "",
               success: function(output) {data = output}
             });
@@ -274,12 +274,27 @@
         }
 
         function register() {
-            if (data.schedulers.length == 0){
-                alert('submit register');
+            if (data.schedulers.length > 0){
+                $("#frmGuess").show();
+                $("#frmRegister").hide();
+
+                return;
             }
 
-            $("#frmGuess").show();
-            $("#frmRegister").hide();
+            if (data.schedulers.length == 0){
+                var post_data = {"tele_id": dev ? 1: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": []};;
+                var response = register_or_push_data(JSON.stringify(post_data));
+                if (response.code == 0){
+                    $("#frmGuess").show();
+                    $("#frmRegister").hide();
+                }else{
+                    $("#lblNotice").text("Đăng ký tài khoản không thành công. " + response.message || "");
+                    $("#lblNotice").removeClass("alert-success");
+                    $("#lblNotice").addClass("alert-danger");
+                    $("#lblNotice").show();
+                    $("#lblNotice").focus();
+                }
+            }
         }
 
         // Submit Guess or Register User
