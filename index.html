@@ -303,7 +303,6 @@
             if (data.schedulers.length == 0){
                 var post_data = {"tele_id": dev ? tele_id: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val(), "results": []};;
                 var response = register_or_push_data(post_data);
-                alert(response);
                 if (response.code == 0){
                     $("#frmGuess").show();
                     $("#frmRegister").hide();
