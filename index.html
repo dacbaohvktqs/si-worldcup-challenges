@@ -6,6 +6,7 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css" />
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="MobileOptimized" content="176" />
@@ -13,9 +14,13 @@
     <meta name="robots" content="noindex,nofollow" />
     <title></title>
     <script src="https://telegram.org/js/telegram-web-app.js?1"></script>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
     <script>
         function setThemeClass() {
             document.documentElement.className = Telegram.WebApp.colorScheme;
@@ -25,181 +30,206 @@
 
     </script>
     <style>
-        body {
-            font-family: sans-serif;
-            background-color: var(--tg-theme-bg-color, #ffffff);
-            color: var(--tg-theme-text-color, #222222);
-            font-size: 16px;
-            margin: 0;
-            padding: 0;
-            color-scheme: var(--tg-color-scheme);
-        }
+              body {
+                  font-family: sans-serif;
+                  background-color: var(--tg-theme-bg-color, #ffffff);
+                  color: var(--tg-theme-text-color, #222222);
+                  font-size: 16px;
+                  margin: 0;
+                  padding: 0;
+                  color-scheme: var(--tg-color-scheme);
+              }
 
-        a {
-            color: var(--tg-theme-link-color, #2678b6);
-        }
+              a {
+                  color: var(--tg-theme-link-color, #2678b6);
+              }
 
-        button {
-            display: block;
-            width: 100%;
-            font-size: 14px;
-            margin: 15px 0;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: var(--tg-theme-button-color, #50a8eb);
-            color: var(--tg-theme-button-text-color, #ffffff);
-            cursor: pointer;
-        }
+              button {
+                  display: block;
+                  width: 100%;
+                  font-size: 14px;
+                  margin: 15px 0;
+                  padding: 12px 20px;
+                  border: none;
+                  border-radius: 4px;
+                  background-color: var(--tg-theme-button-color, #50a8eb);
+                  color: var(--tg-theme-button-text-color, #ffffff);
+                  cursor: pointer;
+              }
 
-            button[disabled] {
-                opacity: 0.6;
-                cursor: auto;
-                pointer-events: none;
-            }
+                  button[disabled] {
+                      opacity: 0.6;
+                      cursor: auto;
+                      pointer-events: none;
+                  }
 
-            button.close_btn {
-                /*position: fixed;*/
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                border-radius: 0;
-                margin: 0;
-                padding: 16px 20px;
-                text-transform: uppercase;
-            }
+                  button.close_btn {
+                      /*position: fixed;*/
+                      position: absolute;
+                      left: 0;
+                      right: 0;
+                      bottom: 0;
+                      border-radius: 0;
+                      margin: 0;
+                      padding: 16px 20px;
+                      text-transform: uppercase;
+                  }
 
-        section {
-            padding: 15px 15px 65px;
-            //text-align: center;
-        }
+              section {
+                  padding: 15px 15px 65px;
+                  //text-align: center;
+              }
 
-        p {
-            margin: 40px 0 15px;
-        }
+              p {
+                  margin: 40px 0 15px;
+              }
 
-        ul {
-            text-align: left;
-        }
+              ul {
+                  text-align: left;
+              }
 
-        li {
-            color: var(--tg-theme-hint-color, #a8a8a8);
-        }
+              li {
+                  color: var(--tg-theme-hint-color, #a8a8a8);
+              }
 
-        textarea {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 7px;
-        }
+              textarea {
+                  width: 100%;
+                  box-sizing: border-box;
+                  padding: 7px;
+              }
 
-        pre {
-            background: rgba(0, 0, 0, .07);
-            border-radius: 4px;
-            padding: 4px;
-            margin: 7px 0;
-            word-break: break-all;
-            word-break: break-word;
-            white-space: pre-wrap;
-            text-align: left;
-        }
+              pre {
+                  background: rgba(0, 0, 0, .07);
+                  border-radius: 4px;
+                  padding: 4px;
+                  margin: 7px 0;
+                  word-break: break-all;
+                  word-break: break-word;
+                  white-space: pre-wrap;
+                  text-align: left;
+              }
 
-        .dark pre {
-            background: rgba(255, 255, 255, .15);
-        }
+              .dark pre {
+                  background: rgba(255, 255, 255, .15);
+              }
 
-        .hint {
-            font-size: .8em;
-            color: var(--tg-theme-hint-color, #a8a8a8);
-        }
+              .hint {
+                  font-size: .8em;
+                  color: var(--tg-theme-hint-color, #a8a8a8);
+              }
 
-        .ok {
-            color: green;
-        }
+              .ok {
+                  color: green;
+              }
 
-        .err {
-            color: red;
-        }
+              .err {
+                  color: red;
+              }
 
-        #fixed_wrap {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            transform: translateY(100vh);
-        }
+              #fixed_wrap {
+                  position: fixed;
+                  left: 0;
+                  right: 0;
+                  top: 0;
+                  transform: translateY(100vh);
+              }
 
-        .viewport_border,
-        .viewport_stable_border {
-            position: fixed;
-            left: 0;
-            right: 0;
-            top: 0;
-            height: var(--tg-viewport-height, 100vh);
-            pointer-events: none;
-        }
+              .viewport_border,
+              .viewport_stable_border {
+                  position: fixed;
+                  left: 0;
+                  right: 0;
+                  top: 0;
+                  height: var(--tg-viewport-height, 100vh);
+                  pointer-events: none;
+              }
 
-        .viewport_stable_border {
-            height: var(--tg-viewport-stable-height, 100vh);
-        }
+              .viewport_stable_border {
+                  height: var(--tg-viewport-stable-height, 100vh);
+              }
 
-            .viewport_border:before,
-            .viewport_stable_border:before {
-                content: attr(text);
-                display: inline-block;
-                position: absolute;
-                background: gray;
-                right: 0;
-                top: 0;
-                font-size: 7px;
-                padding: 2px 4px;
-                vertical-align: top;
-            }
+                  .viewport_border:before,
+                  .viewport_stable_border:before {
+                      content: attr(text);
+                      display: inline-block;
+                      position: absolute;
+                      background: gray;
+                      right: 0;
+                      top: 0;
+                      font-size: 7px;
+                      padding: 2px 4px;
+                      vertical-align: top;
+                  }
 
-            .viewport_stable_border:before {
-                background: green;
-                left: 0;
-                right: auto;
-            }
+                  .viewport_stable_border:before {
+                      background: green;
+                      left: 0;
+                      right: auto;
+                  }
 
-            .viewport_border:after,
-            .viewport_stable_border:after {
-                content: '';
-                display: block;
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-                border: 2px dashed gray;
-            }
+                  .viewport_border:after,
+                  .viewport_stable_border:after {
+                      content: '';
+                      display: block;
+                      position: absolute;
+                      left: 0;
+                      right: 0;
+                      top: 0;
+                      bottom: 0;
+                      border: 2px dashed gray;
+                  }
 
-            .viewport_stable_border:after {
-                border-color: green;
-            }
+                  .viewport_stable_border:after {
+                      border-color: green;
+                  }
 
-        small {
-            font-size: 12px;
-        }
+              small {
+                  font-size: 12px;
+              }
 
-        .col {
-            padding: 5px;
-            margin: 0px;
-        }
+              .col {
+                  padding: 5px;
+                  margin: 0px;
+              }
+              /* ==========================================
+          FOR DEMO PURPOSE
+        ========================================== */
+              .bg-light {
+                  background: #eef0f4;
+              }
+
+              .choices__list--dropdown .choices__item--selectable {
+                  padding-right: 1rem;
+              }
+
+              .choices__list--single {
+                  padding: 0;
+              }
+
+              .choices[data-type*=select-one]:after {
+                  right: 1.5rem;
+              }
+
+              .shadow {
+                  box-shadow: 0.3rem 0.3rem 1rem rgba(178, 200, 244, 0.23);
+              }
+
+              a {
+                  text-decoration: none;
+                  color: inherit;
+                  transition: all 0.3s;
+              }
     </style>
 </head>
 
 <body>
     <section>
-        <h1 id="greeting"></h1>
-
         <form>
-            <div class="card text-white" id="frmRegister">
-                <h5 class="card-header bg-primary">Đăng ký thông tin</h5>
+            <div class="card" id="frmRegister">
+                <h5 class="card-header bg-primary text-white">Đăng ký thông tin</h5>
                 <div class="card-body">
                     <label class="form-control border-0 p-0 m-0"><b>Vui lòng chọn Họ và tên</b></label>
-                    <select class="form-control" id="cboUsers">
-                    </select>
+                    <select id="cboUsers" class="selectpicker form-control"></select>
                 </div>
                 <br />
                 <div class="col-md-12"><button type="button" class="btn btn-primary" onclick="register()">Đăng ký</button></div>
@@ -220,7 +250,8 @@
     </section>
 
     <script type="application/javascript">
-        var tele_id = "14";
+
+        var tele_id = "15";
         var data = {};
         var get_data_endpoint = "https://gw-bioid.vnpt.vn/wc/1.0/WorldCup/GetData_WorldCup";
         var post_data_endpoint = "https://gw-bioid.vnpt.vn/wc/1.0/WorldCup/Guess";
@@ -333,12 +364,25 @@
                 // Add Employees
                 if (data.employees){
                     $('#cboUsers').find('option').remove().end();
+                    var options = [];
                     $.each(data.employees, function (i, item) {
                         $('#cboUsers').append($('<option>', {
                             value: item.id,
                             text : item.name
                         }));
                     });
+                    const sorting = document.querySelector('.selectpicker');
+                    const commentSorting = document.querySelector('.selectpicker');
+                    const sortingchoices = new Choices(sorting, {
+                        placeholder: false,
+                        itemSelectText: ''
+                    });
+                    // Trick to apply your custom classes to generated dropdown menu
+                    let sortingClass = sorting.getAttribute('class');
+                    window.onload= function () {
+                        sorting.parentElement.setAttribute('class', sortingClass);
+                    }
+
                 }
 
                 $("#frmRegister").show();
