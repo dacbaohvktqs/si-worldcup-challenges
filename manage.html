@@ -200,27 +200,7 @@
 <body>
     <section>
         <form>
-            <div class="card" id="frmRegister">
-                <h5 class="card-header bg-primary text-white">Đăng ký thông tin</h5>
-                <div class="card-body">
-                    <label class="form-control border-0 p-0 m-0"><b>Vui lòng chọn Họ và tên</b></label>
-                    <select id="cboUsers" class="selectpicker form-control"></select>
-                </div>
-                <br />
-                <div class="col-md-12"><button type="button" class="btn btn-primary" onclick="register()">Đăng ký</button></div>
-            </div>
-            <br />
-            <div class="card" id="frmGuess">
-                <h5 class="card-header bg-primary text-white">Dự đoán kết quả các trận</h5>
-                <div class="card-body text-black">
-                    <div id="goalInfo"></div>
-                    <hr />
-                    <button type="button" id="btn-guess" class="btn btn-primary" onclick="submit_result()">Gửi dự đoán</button>
-                    <div id="lblNotice" class="alert alert-success" role="alert">
-                        Dự đoán thành công! Chúc bạn luôn may mắn!
-                    </div>
-                </div>
-            </div>
+           <button type="button" id="btn-guess" class="btn btn-primary" onclick="notice()">Gửi nhắc nhở</button>
         </form>
     </section>
 
@@ -238,10 +218,56 @@
         const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
 
 
-         $( document ).ready(function() {
-         
-         
-         });
+         function notice(){
+            var response_data = {};
+            $.ajax({
+                  type: 'GET',
+                  async: false,
+                  url: "https://gw-bioid.vnpt.vn/wc/1.0/WorldCup/GetData_Guess",
+                  data: "",
+                  success: function(output) {response_data = output.data}
+            });
+
+            var tele_ids =[];
+
+            $.each(response_data, function (i, item) {
+              $.each(item.guess_data, function (i, item1) {
+                if (tele_ids.indexOf(item1.tele_id) == -1){
+                  tele_ids.push(item1.tele_id);
+                }
+              });
+            });
+
+            // Send notice
+            $.each(tele_ids, function (i, item) {
+              var data = {};
+              $.ajax({
+                type: 'GET',
+                async: false,
+                url: get_data_endpoint + "?tele_id=" + item,
+                data: "",
+                success: function(output) {data = output}
+              });
+
+              if (data.is_guess == 0){
+                send_notice(item);
+              }
+
+            });
+
+            console.log(tele_ids);
+         }
+
+         function send_notice(chat_id){
+            var message = {"chat_id": chat_id, "text": "Xin chào, tôi là SI WorldCup 2022 Bot!\nHôm nay bạn đã dự đoán kết quả của các trận cầu nảy lửa chưa? Bấm Bắt đầu để dự đoán ngay nhé (>__<)"};
+            $.ajax({
+                type: 'POST',
+                async: false,
+                url: 'https://api.telegram.org/bot5685226875:AAGNAEV6HN71VrfqB79cQtUK0GdOF-LU_vU/sendMessage',
+                data: message,
+                success: function(output) {data = output}
+            });
+        }
   </script>
   </body>
 </html>
