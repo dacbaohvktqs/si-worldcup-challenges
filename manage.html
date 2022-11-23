@@ -239,6 +239,7 @@
             });
 
             // Send notice
+            var is_done = true;
             $.each(tele_ids, function (i, item) {
               var data = {};
               $.ajax({
@@ -250,12 +251,13 @@
               });
 
               if (data.is_guess == 0){
+                is_done = false;
                 send_notice(item);
               }
 
             });
 
-            alert('Nhắc nhở hoàn thành!');
+            alert(is_done ? 'Tất cả các người chơi đã dự đoán!': 'Nhắc nhở hoàn thành!');
          }
 
          function send_notice(chat_id){
