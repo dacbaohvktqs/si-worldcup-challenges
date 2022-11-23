@@ -238,7 +238,7 @@
         const initDataUnsafe = Telegram.WebApp.initDataUnsafe || {};
 
 
-        $( document ).ready(function() {
+         $( document ).ready(function() {
             $.ajax({
               type: 'GET',
               async: false,
@@ -373,7 +373,7 @@
                 // da du doan
                 var content = '';
                 $.each(data.schedulers, function (i, item) {
-                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' đá lúc ' + item.time + ' ngày '+ item.date +'</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.a_team +'</b></label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value='+ item.a_team_result +' min="0" max="10"  disabled  class="form-control goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.b_team +'</b></label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value='+ item.b_team_result +' min="0" max="10" disabled class="form-control goal-result"></div></div>';
+                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (item.id + 1) + ' đá lúc ' + item.time + ' ngày '+ item.date +'</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.a_team +'</b></label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value='+ item.a_team_result +' min="0" max="10"  disabled  class="form-control goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.b_team +'</b></label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value='+ item.b_team_result +' min="0" max="10" disabled class="form-control goal-result"></div></div>';
                        if (item.turn == "BANG" || item.turn == "1/16"){
                             content+= '<div class="col ml-3 use-star d-none"><div class="check-box"><input class="form-check-input" type="checkbox" value="" id="use-star-' + item.id + '"><label class="form-check-label" for="flexCheckChecked">Sử dụng ngôi sao hi vọng</label></div></div></div>';
                         }else{
@@ -396,7 +396,13 @@
                 // chua du doan
                 var content = '';
                 $.each(data.schedulers, function (i, item) {
-                       content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (i + 1) + ' đá lúc ' + item.time + ' ngày '+ item.date +'</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.a_team +'</b></label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.b_team +'</b></label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control  goal-result"></div></div>';
+                       var scheduler_time = new Date(convert_date(item.date) + ' ' + item.time);
+                        if ((scheduler_time.getTime() - new Date().getTime()) < 0){
+                            content += '<label class="form-control border-0 p-0 m-0"><b>Trận đấu đã bắt đầu lúc ' + item.time +'</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-success"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-success"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.a_team +'</b></label></div><div class="col"><input type="number" disabled placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.b_team +'</b></label></div><div class="col"><input type="number" disabled placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control  goal-result"></div></div>';
+                        }else {
+                            content += '<label class="form-control border-0 p-0 m-0"><b>Trận ' + (item.id + 1) + ' đá lúc ' + item.time + ' ngày '+ item.date +'</b></label><hr class="p-0 m-0"><div class="col-md-12"><div class="row"><div class="col card-header bold text-white bg-danger"><b>Đội tuyển</b></div><div class="col card-header bold text-white bg-danger"><b>Tỉ số dự đoán</b></div></div><br><div class="row"><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.a_team +'</b></label></div><div class="col"><input type="number" id="a_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control goal-result"></div><div class="w-100"></div><div class="col"><label class="form-control border-0">Đội tuyển <b>' + item.b_team +'</b></label></div><div class="col"><input type="number" id="b_result_'+ item.id +'" placeholder="Nhập tỷ số" value="0" min="0" max="10" class="form-control  goal-result"></div></div>';
+                        }
+                       
                         if (item.turn == "BANG" || item.turn == "1/16"){
                             content+= '<div class="col ml-3 use-star d-none"><div class="check-box"><input class="form-check-input" type="checkbox" value="" id="use-star-' + item.id + '"><label class="form-check-label" for="flexCheckChecked">Sử dụng ngôi sao hi vọng</label></div></div></div>';
                         }else{
@@ -420,11 +426,22 @@
               if (confirm(text) == true) {
                   var results = [];
                  $.each(data.schedulers, function (i, item) {
-                    var result = {"id": item.id, "use_star": $("#use-star-" + item.id).is(':checked') ? 1: 0, "a_team": parseInt($("#a_result_" + item.id).val()), "b_team": parseInt($("#b_result_" + item.id).val())};
-                    results.push(result);
+                    var result = {"id": item.id, "use_star": $("#use-star-" + item.id).is(':checked') ? 1: 0, "a_team": parseInt($("#a_result_" + item.id).val() ? $("#a_result_" + item.id).val(): "-1"), "b_team": parseInt($("#b_result_" + item.id).val() ? $("#b_result_" + item.id).val() : "-1")};
+
+                    if (result.a_team !== -1 && result.b_team !== -1){
+                        console.log(result);
+                        results.push(result);
+                    }
+                    
                  });
 
                 var postData = {"tele_id": dev ? tele_id: `${initDataUnsafe.user.id}`, "emp_id":  $("#cboUsers").val() == null ? "0": $("#cboUsers").val(), "results": results};
+
+                if (results.length == 0){
+                    alert("Toàn bộ các trận đấu đã và đang diễn ra. Không thể thực hiện gửi dự đoán!");
+                    return;
+                }
+
                 // TODO Call API
                 var response = register_or_push_data(postData);
                 if (response.code == 0){
@@ -448,6 +465,11 @@
 
         function webviewClose() {
             Telegram.WebApp.close();
+        }
+
+        function convert_date(old_date){
+            var dates = old_date.split('/');
+            return dates[2] + '-' + dates[1] + '-' + dates[0];
         }
     </script>
 </body>
